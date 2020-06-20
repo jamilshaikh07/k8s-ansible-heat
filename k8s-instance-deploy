@@ -1,0 +1,61 @@
+heat_template_version: 2015-04-30       
+
+description: Heat template to deploy master & worker nodes for k8s cluster
+
+parameters:
+
+   key_name:
+    type: string
+    label: Key pair name
+    description: Public/Private key pair name
+
+   pub_key:
+    type: string
+    label: Public key
+    description: Public key to be installed on the compute instance
+
+resources:
+
+   random-str:
+    type: OS::Heat::RandomString
+    properties:
+      length: 4
+
+   my_keypair:
+    type: OS::Nova::KeyPair
+    properties:
+      name:
+        str_replace:
+          template: base_rand
+          params:
+            base: { get_param: key_name }
+            rand: { get_resource: random-str }
+  
+   Master:     
+     type: OS::Heat::ResourceGroup
+     properties:
+       count: 1
+       resource_def:
+         type: OS::Nova::Server
+         properties:
+           name: k8s_master_%index%
+           image: ACP-17.12.2
+           flavor:  k8s-master
+           key_name: { get_resource: my_keypair }
+           networks:
+           - network: management_network
+
+   Worker:
+     type: OS::Heat::ResourceGroup
+     properties:
+       count: 1
+       resource_def:
+         type: OS::Nova::Server
+         properties:
+           name: k8s_worker_%index%
+           image: ACP-17.12.2
+           flavor:  k8s-worker
+           key_name: { get_resource: my_keypair }
+           networks:
+           - network: management_network
+
