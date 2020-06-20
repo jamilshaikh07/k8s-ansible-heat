@@ -1,0 +1,5 @@
+[masters]
+master.allotindialab.in ansible_host=192.168.0.237
+
+[workers]
+worker1.allotindialab.in ansible_host=192.168.0.230
