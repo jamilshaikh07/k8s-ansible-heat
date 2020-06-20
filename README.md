@@ -1,2 +1,4 @@
 # k8s-ansible-heat
-Initialize k8s cluster using ansible &amp; heat
+
+1. Create instance using heat template
+2. Deploy the k8s cluster using ansible
