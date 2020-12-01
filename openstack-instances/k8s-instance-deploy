@@ -39,7 +39,7 @@ resources:
          type: OS::Nova::Server
          properties:
            name: k8s_master_%index%
-           image: ACP-17.12.2
+           image: ACP_17.14.1_B10
            flavor:  k8s-master
            key_name: { get_resource: my_keypair }
            networks:
@@ -53,7 +53,7 @@ resources:
          type: OS::Nova::Server
          properties:
            name: k8s_worker_%index%
-           image: ACP-17.12.2
+           image: ACP_17.14.1_B10
            flavor:  k8s-worker
            key_name: { get_resource: my_keypair }
            networks:

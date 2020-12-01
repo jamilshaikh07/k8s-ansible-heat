@@ -84,8 +84,3 @@
         state: present
         allow_downgrade: yes
 
-- hosts: all
-  become: yes
-  tasks:
-   - name: reboot ALL machines
-     reboot:
